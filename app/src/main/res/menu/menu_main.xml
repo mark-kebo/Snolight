@@ -1,0 +1,20 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.vorozhbicky.dmitry.snolight.MainActivity">
+    <item
+        android:id="@+id/action_graph_ch"
+        android:orderInCategory="100"
+        android:title="@string/graphCh"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/action_settings"
+        android:orderInCategory="200"
+        android:title="@string/action_settings"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/action_about_us"
+        android:orderInCategory="300"
+        android:title="О приложении"
+        app:showAsAction="never" />
+</menu>

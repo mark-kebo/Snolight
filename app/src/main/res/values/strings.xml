@@ -1,0 +1,27 @@
+<resources>
+    <string name="app_name">Snolight - метеостанция</string>
+    <string name="action_settings">Настройки</string>
+    <string name="temp_c">°C</string>
+    <string name="main_str_wet">Влажность:</string>
+    <string name="pressure">Давление:</string>
+    <string name="string_sost_one_pressure">Наблюдается резкое падение давления, возможно ухудшение погоды</string>
+    <string name="string_sost_two">Условия для жизни нормальные</string>
+    <string name="temp_c_f">°C / °F</string>
+    <string name="temp_f">°F</string>
+    <string name="temp_string_station">Темп-ра в помещении:</string>
+    <string name="temp_station_1">Темп-ра на 1-м датчике:</string>
+    <string name="temp_station_2">Темп-ра на 2-м датчике:</string>
+    <string name="start_indication">...</string>
+    <string name="todo">TODO</string>
+    <string name="title_bluetooth_activity">Показания датчиков Bluetooth-метеостанции</string>
+    <string name="string_devices">Выберете Ваше устройство из списка ниже:</string>
+    <string name="percentages">%</string>
+    <string name="Pascal">Pa</string>
+    <string name="height_above_sea_level">Высота над уровнем моря:</string>
+    <string name="stringToLoad">Устройства доступные для подключения:</string>
+    <string name="StringSmConst">см</string>
+    <string name="StringMmRtSt">мм.рт.ст.</string>
+    <string name="switchMmRtStToPascal">Pa / мм.рт.ст.</string>
+    <string name="title_activity_data_reader"></string>
+    <string name="graphCh">Графики изменений</string>
+</resources>

@@ -1,0 +1,334 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="com.vorozhbicky.dmitry.snolight.DataReader"
+    tools:showIn="@layout/activity_data_reader">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="205dp"
+        android:background="@drawable/head_background"
+        android:orientation="vertical"
+        android:padding="8dp">
+
+        <TextView
+            android:id="@+id/textViewForState"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:text="@string/string_sost_two"
+            android:textAlignment="center"
+            android:textColor="@android:color/background_light"
+            android:textSize="24sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/textViewForPredictionWeather"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:elevation="0dp"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:paddingTop="10dp"
+            android:text="@string/string_sost_one_pressure"
+            android:textAlignment="center"
+            android:textColor="@android:color/background_light"
+            android:textSize="18sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/back"
+            android:orientation="horizontal"
+            android:padding="8dp">
+
+            <ImageView
+                android:id="@+id/imageTemperaturesIn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="0"
+                app:srcCompat="@drawable/ico_temperatures" />
+
+            <TextView
+                android:id="@+id/textStereoTemperaturesIn"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:paddingLeft="2dp"
+                android:text="@string/temp_string_station"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/textChangeTemperaturesIn"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="@string/start_indication"
+                android:textColor="@android:color/holo_green_dark"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/textUnitsTemperaturesIn"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="10"
+                android:paddingRight="2dp"
+                android:text="@string/temp_c"
+                android:textColor="@android:color/holo_green_dark"
+                android:textSize="18sp" />
+
+            <ImageView
+                android:id="@+id/imageStateTemperaturesIn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="0"
+                app:srcCompat="@drawable/ico_ok" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/back"
+            android:orientation="horizontal"
+            android:padding="8dp">
+
+            <ImageView
+                android:id="@+id/imageWet"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="0"
+                app:srcCompat="@drawable/ico_wet" />
+
+            <TextView
+                android:id="@+id/textStereoWet"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:paddingLeft="2dp"
+                android:text="@string/main_str_wet"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/textChangeWet"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="@string/start_indication"
+                android:textColor="@android:color/holo_green_dark"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/textUnitsWet"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="10"
+                android:paddingRight="2dp"
+                android:text="@string/percentages"
+                android:textColor="@android:color/holo_green_dark"
+                android:textSize="18sp" />
+
+            <ImageView
+                android:id="@+id/imageStateWet"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="0"
+                app:srcCompat="@drawable/ico_ok" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/back"
+            android:orientation="horizontal"
+            android:padding="8dp">
+
+            <ImageView
+                android:id="@+id/imagePressure"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="0"
+                app:srcCompat="@drawable/ico_pressure" />
+
+            <TextView
+                android:id="@+id/textStereoPressure"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:paddingLeft="2dp"
+                android:text="@string/pressure"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/textChangePressure"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="@string/start_indication"
+                android:textColor="@android:color/holo_green_dark"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/textUnitsPressure"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="10"
+                android:paddingRight="2dp"
+                android:text="@string/Pascal"
+                android:textColor="@android:color/holo_green_dark"
+                android:textSize="18sp" />
+
+            <ImageView
+                android:id="@+id/imageStatePressure"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="0"
+                app:srcCompat="@drawable/ico_ok" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/back"
+            android:orientation="horizontal"
+            android:padding="8dp">
+
+            <ImageView
+                android:id="@+id/imageTemperaturesOne"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="0"
+                app:srcCompat="@drawable/ico_temperatures" />
+
+            <TextView
+                android:id="@+id/textStereoTemperaturesOne"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:paddingLeft="2dp"
+                android:text="@string/temp_station_1"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/textChangeTemperaturesOne"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="@string/start_indication"
+                android:textColor="@android:color/holo_green_dark"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/textUnitsTemperaturesOne"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="10"
+                android:paddingRight="2dp"
+                android:text="@string/temp_c"
+                android:textColor="@android:color/holo_green_dark"
+                android:textSize="18sp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/back"
+            android:orientation="horizontal"
+            android:padding="8dp">
+
+            <ImageView
+                android:id="@+id/imageTemperaturesTwo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="0"
+                app:srcCompat="@drawable/ico_temperatures" />
+
+            <TextView
+                android:id="@+id/textStereoTemperaturesTwo"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:paddingLeft="2dp"
+                android:text="@string/temp_station_2"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/textChangeTemperaturesTwo"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="@string/start_indication"
+                android:textColor="@android:color/holo_green_dark"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/textUnitsTemperaturesTwo"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="10"
+                android:paddingRight="2dp"
+                android:text="@string/temp_c"
+                android:textColor="@android:color/holo_green_dark"
+                android:textSize="18sp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/back_last"
+            android:orientation="horizontal"
+            android:padding="8dp">
+
+            <ImageView
+                android:id="@+id/imageHeight"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="0"
+                app:srcCompat="@drawable/ico_hsm" />
+
+            <TextView
+                android:id="@+id/textStereoHeight"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:paddingLeft="2dp"
+                android:text="@string/height_above_sea_level"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/textChangeHeight"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="@string/start_indication"
+                android:textColor="@android:color/holo_green_dark"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/textUnitsHeight"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="10"
+                android:paddingRight="2dp"
+                android:text="@string/StringSmConst"
+                android:textColor="@android:color/holo_green_dark"
+                android:textSize="18sp" />
+
+        </LinearLayout>
+    </LinearLayout>
+
+</LinearLayout>
