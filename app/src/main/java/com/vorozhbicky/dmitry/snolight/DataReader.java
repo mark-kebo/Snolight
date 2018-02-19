@@ -19,41 +19,55 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class DataReader extends AppCompatActivity {
 
+    private static final String STRING_PATTERN =
+            "^(H\\d?\\d)\\." + "(\\d\\d)" + "(T\\d?\\d)\\." + "(\\d\\d)" +
+                    "(Q\\d?\\d)\\." + "(\\d\\d)" + "(W\\d?\\d)\\." + "(\\d\\d)" +
+                    "(A\\d?\\d?\\d?\\d?\\d?\\d?)" + "(P\\d?\\d?\\d?\\d?\\d?\\d?\\d?)" + "B\\d?\\d?\\d?$";
     private ThreadConnected myThreadConnected;
-    private BluetoothSocket bluetoothSocket = MainActivity.bluetoothSocket;
+    private BluetoothSocket bluetoothSocket;
 
-    private TextView textStereoTemperaturesIn, textViewForPredictionWeather, textChangeWet,
-            textChangePressure, textChangeTemperaturesTwo, textChangeTemperaturesOne,
-            textChangeTemperaturesIn, textChangeHeight, textUnitsTemperaturesOne, textUnitsTemperaturesIn,
-            textUnitsTemperaturesTwo, textUnitsPressure;
+    private TextView textChangeWet;
+    private TextView textChangePressure;
+    private TextView textChangeTemperaturesTwo;
+    private TextView textChangeTemperaturesOne;
+    private TextView textChangeTemperaturesIn;
+    private TextView textChangeHeight;
+    private TextView textUnitsTemperaturesOne;
+    private TextView textUnitsTemperaturesIn;
+    private TextView textUnitsTemperaturesTwo;
+    private TextView textUnitsPressure;
     private int swTemp = 0, swPress = 0;
 
     private String tempDev, tempOne, tempTwo, press, wet, sm;
-    private String sbprint;
-    private int h, t, q, w, a, p, b;
-    private StringBuilder sb = new StringBuilder();
+    private StringBuilder sb;
     BufferedReader br;
+
+    private boolean sendBool;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_data_reader);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 sendBiteToArduino();
             }
         });
-
-        textStereoTemperaturesIn = findViewById(R.id.textStereoTemperaturesIn);
-        textViewForPredictionWeather = findViewById(R.id.textViewForPredictionWeather);
+        bluetoothSocket = MainActivity.bluetoothSocket;
+        sb = new StringBuilder();
+        sendBool = true;
+        TextView textStereoTemperaturesIn = findViewById(R.id.textStereoTemperaturesIn);
+        TextView textViewForPredictionWeather = findViewById(R.id.textViewForPredictionWeather);
         textChangeWet = findViewById(R.id.textChangeWet);
         textChangePressure = findViewById(R.id.textChangePressure);
         textChangeTemperaturesTwo = findViewById(R.id.textChangeTemperaturesTwo);
@@ -65,31 +79,6 @@ public class DataReader extends AppCompatActivity {
         textUnitsTemperaturesTwo = findViewById(R.id.textUnitsTemperaturesTwo);
         textUnitsPressure = findViewById(R.id.textUnitsPressure);
 
-//        temperatureSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-//            @Override
-//            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-//                // в зависимости от значения isChecked выводим нужное сообщение
-//                if (isChecked) {
-//                    swTemp = 1;
-//                } else {
-//                    swTemp = 0;
-//                }
-//                sendBiteToArduino();
-//            }
-//        });
-//
-//        pressureSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-//            @Override
-//            public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
-//                // в зависимости от значения isChecked выводим нужное сообщение
-//                if (isChecked) {
-//                    swPress = 1;
-//                } else {
-//                    swPress = 0;
-//                }
-//                sendBiteToArduino();
-//            }
-//        });
         myThreadConnected = new ThreadConnected(bluetoothSocket);
         myThreadConnected.start(); // запуск потока приёма и отправки данных
         System.out.println("myThreadConnected created");
@@ -106,6 +95,7 @@ public class DataReader extends AppCompatActivity {
         int id = menuItem.getItemId();
         switch (id) {
             case R.id.action_graph_ch:
+                sendBiteToArduino();
                 break;
             case R.id.action_settings:
                 break;
@@ -120,8 +110,14 @@ public class DataReader extends AppCompatActivity {
     public void onDestroy() {
         System.out.println("------------DESTROY INFO FRAGMENT------------");
         sb.delete(0, sb.length());
-        sbprint = null;
         super.onDestroy();
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();  // Always call the superclass method first
+        System.out.println("_________________________________PAUSE_______________________________");
+        sb.delete(0, sb.length());
     }
 
     @Override
@@ -152,35 +148,41 @@ public class DataReader extends AppCompatActivity {
         public void run() { // Приём данных
             //Пытаемся получить данные
             while (true) {
-                br = new BufferedReader(new InputStreamReader(connectedInputStream));
-                String read;
-                try {
-                    while ((read = br.readLine()) != null) {
-                        System.out.println(read);
-                        Thread.sleep(1000);
-                        sb.append(read);
-                        sbprint = sb.toString();
-                        gettingLine();
+                if (sendBool) {
+                    String read, sbprint;
+                    boolean temp;
+                    br = new BufferedReader(new InputStreamReader(connectedInputStream));
+                    try {
+                        if ((read = br.readLine()) != null) {
+                            sb.append(read);
+                            sbprint = sb.toString();
+                            sb.delete(0, sb.length());
+                            temp = testStringForWrite(sbprint);
+                            System.out.println(sbprint);
+                            if (temp) {
+                                gettingLine(sbprint);
+                                sendBool = false;
+                            }
+                        } else {
+                            br.close();
+                            break;
+                        }
+                    } catch (IOException e) {
+                        e.printStackTrace();
                     }
-                    br.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                    break;
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                    break;
                 }
             }
         }
 
-        private void gettingLine() {
-            h = sbprint.indexOf("H");
-            t = sbprint.indexOf("T");
-            q = sbprint.indexOf("Q");
-            w = sbprint.indexOf("W");
-            a = sbprint.indexOf("A");
-            p = sbprint.indexOf("P");
-            b = sbprint.indexOf("B");
+
+        private void gettingLine(String sbprint) {
+            int h = sbprint.indexOf("H");
+            int t = sbprint.indexOf("T");
+            int q = sbprint.indexOf("Q");
+            int w = sbprint.indexOf("W");
+            int a = sbprint.indexOf("A");
+            int p = sbprint.indexOf("P");
+            int b = sbprint.indexOf("B");
             tempDev = sbprint.substring(t + 1, q);
             tempOne = sbprint.substring(q + 1, w);
             tempTwo = sbprint.substring(w + 1, a);
@@ -242,9 +244,15 @@ public class DataReader extends AppCompatActivity {
 
     public void sendBiteToArduino() {
         if (myThreadConnected != null) {
+            sendBool = true;
             byte[] bytesToSend = "A".getBytes();
             myThreadConnected.write(bytesToSend);
         }
     }
 
+    public static boolean testStringForWrite(String testString) {
+        Pattern p = Pattern.compile(STRING_PATTERN);
+        Matcher m = p.matcher(testString);
+        return m.matches();
+    }
 }

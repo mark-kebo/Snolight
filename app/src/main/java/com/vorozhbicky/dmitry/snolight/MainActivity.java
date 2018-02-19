@@ -38,7 +38,6 @@ public class MainActivity extends AppCompatActivity {
     private UUID myUUID;
     public static BluetoothSocket bluetoothSocket = null;
     ThreadConnectBTdevice myThreadConnectBTdevice;
-    private StringBuilder sb = new StringBuilder();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,8 +45,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         final String UUID_STRING_WELL_KNOWN_SPP = "00001101-0000-1000-8000-00805F9B34FB";
 
-        listViewPairedDevice = (ListView) findViewById(R.id.pairedlist);
-        ButPanel = (FrameLayout) findViewById(R.id.ButPanel);
+        listViewPairedDevice = findViewById(R.id.pairedlist);
+        ButPanel = findViewById(R.id.ButPanel);
 
         if (!getPackageManager().hasSystemFeature(PackageManager.FEATURE_BLUETOOTH)) {
             Toast.makeText(this, "BLUETOOTH NOT support", Toast.LENGTH_LONG).show();
@@ -61,7 +60,6 @@ public class MainActivity extends AppCompatActivity {
         if (bluetoothAdapter == null) {
             Toast.makeText(this, "Bluetooth is not supported on this hardware platform", Toast.LENGTH_LONG).show();
             finish();
-            return;
         }
     } // END onCreate
 
