@@ -24,4 +24,15 @@
     <string name="switchMmRtStToPascal">Pa / мм.рт.ст.</string>
     <string name="title_activity_data_reader"></string>
     <string name="graphCh">Графики изменений</string>
+    <string name="aboutUs">О приложении</string>
+    <string name="update">Обновление</string>
+    <string name="title_activity_charts">Charts</string>
+    <string name="section_format">Hello World from section: %1$d</string>
+    <string name="currentValues">Текущие значения</string>
+    <string name="tab_text_1">Tab 1</string>
+    <string name="tab_text_2">Tab 2</string>
+    <string name="tab_text_3">Tab 3</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

@@ -1,7 +1,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context="com.vorozhbicky.dmitry.snolight.MainActivity">
+    tools:context="com.vorozhbicky.dmitry.snolight.Charts">
     <item
         android:id="@+id/update"
         android:icon="@drawable/update"
@@ -9,9 +9,9 @@
         android:title="@string/update"
         app:showAsAction="always" />
     <item
-        android:id="@+id/action_graph_ch"
+        android:id="@+id/action_current_values"
         android:orderInCategory="2"
-        android:title="@string/graphCh"
+        android:title="@string/currentValues"
         app:showAsAction="never" />
     <item
         android:id="@+id/action_settings"

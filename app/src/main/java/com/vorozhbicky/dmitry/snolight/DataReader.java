@@ -25,9 +25,9 @@ import java.util.regex.Pattern;
 public class DataReader extends AppCompatActivity {
 
     private static final String STRING_PATTERN =
-            "^(H\\d?\\d)\\." + "(\\d\\d)" + "(T\\d?\\d)\\." + "(\\d\\d)" +
-                    "(Q\\d?\\d)\\." + "(\\d\\d)" + "(W\\d?\\d)\\." + "(\\d\\d)" +
-                    "(A\\d?\\d?\\d?\\d?\\d?\\d?)" + "(P\\d?\\d?\\d?\\d?\\d?\\d?\\d?)" + "B\\d?\\d?\\d?$";
+            "^(H\\d?\\d)\\." + "(\\d\\d)" + "(T-?\\d?\\d)\\." + "(\\d\\d)" +
+                    "(Q-?\\d?\\d)\\." + "(\\d\\d)" + "(W-?\\d?\\d)\\." + "(\\d\\d)" +
+                    "(A\\d?\\d?\\d?\\d?\\d?\\d?)" + "(P\\d?\\d?\\d?\\d?\\d?\\d?\\d?)$";
     private ThreadConnected myThreadConnected;
     private BluetoothSocket bluetoothSocket;
 
@@ -55,14 +55,6 @@ public class DataReader extends AppCompatActivity {
         setContentView(R.layout.activity_data_reader);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-        FloatingActionButton fab = findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                sendBiteToArduino();
-            }
-        });
         bluetoothSocket = MainActivity.bluetoothSocket;
         sb = new StringBuilder();
         sendBool = true;
@@ -93,14 +85,20 @@ public class DataReader extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem menuItem) {
         int id = menuItem.getItemId();
+        Intent intent;
         switch (id) {
-            case R.id.action_graph_ch:
+            case R.id.update:
                 sendBiteToArduino();
                 break;
+            case R.id.action_graph_ch:
+                intent = new Intent(getBaseContext(), ChartsActivity.class);// запуск потока приёма и отправки данных
+                startActivity(intent);
+                break;
             case R.id.action_settings:
+                sendBiteToArduino();
                 break;
             case R.id.action_about_us:
-                Intent intent = new Intent(getBaseContext(), AboutUsActivity.class);// запуск потока приёма и отправки данных
+                intent = new Intent(getBaseContext(), AboutUsActivity.class);// запуск потока приёма и отправки данных
                 startActivity(intent);
         }
         return true;
@@ -182,11 +180,10 @@ public class DataReader extends AppCompatActivity {
             int w = sbprint.indexOf("W");
             int a = sbprint.indexOf("A");
             int p = sbprint.indexOf("P");
-            int b = sbprint.indexOf("B");
-            tempDev = sbprint.substring(t + 1, q);
+            tempTwo = sbprint.substring(t + 1, q);
             tempOne = sbprint.substring(q + 1, w);
-            tempTwo = sbprint.substring(w + 1, a);
-            press = sbprint.substring(p + 1, b);
+            tempDev = sbprint.substring(w + 1, a);
+            press = sbprint.substring(p + 1, sbprint.length());
             wet = sbprint.substring(h + 1, t);
             sm = sbprint.substring(a + 1, p);
             final Integer doublePress = Integer.valueOf(press);
@@ -245,7 +242,7 @@ public class DataReader extends AppCompatActivity {
     public void sendBiteToArduino() {
         if (myThreadConnected != null) {
             sendBool = true;
-            byte[] bytesToSend = "A".getBytes();
+            byte[] bytesToSend = "1".getBytes();
             myThreadConnected.write(bytesToSend);
         }
     }
