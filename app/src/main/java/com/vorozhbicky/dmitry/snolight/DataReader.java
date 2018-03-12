@@ -146,6 +146,9 @@ public class DataReader extends AppCompatActivity {
         public void run() { // Приём данных
             //Пытаемся получить данные
             while (true) {
+                while (!sendBool) {
+                    Thread.yield();        //Передать управление другим потокам
+                }
                 if (sendBool) {
                     String read, sbprint;
                     boolean temp;

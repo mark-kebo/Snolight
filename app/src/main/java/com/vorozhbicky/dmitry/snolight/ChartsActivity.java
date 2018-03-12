@@ -9,11 +9,8 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
 
 public class ChartsActivity extends AppCompatActivity {
 
@@ -92,9 +89,15 @@ public class ChartsActivity extends AppCompatActivity {
             // Return a PlaceholderFragment (defined as a static inner class below).
             switch (position) {
                 case 0:
-                    return new FirstChartFragment();
+                    return new ChartFragment("3");
                 case 1:
-                    return new FirstChartFragment();
+                    return new ChartFragment("4");
+                case 2:
+                    return new ChartFragment("5");
+                case 3:
+                    return new ChartFragment("2");
+                case 4:
+                    return new ChartFragment("6");
                 default:
                     return null;
             }
@@ -102,8 +105,8 @@ public class ChartsActivity extends AppCompatActivity {
 
         @Override
         public int getCount() {
-            // Show 3 total pages.
-            return 2;
+            // Show 5 total pages.
+            return 5;
         }
     }
 }
