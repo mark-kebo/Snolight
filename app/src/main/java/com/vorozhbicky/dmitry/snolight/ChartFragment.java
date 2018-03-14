@@ -9,6 +9,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.XAxis;
@@ -51,6 +52,8 @@ public class ChartFragment extends Fragment {
 
     View myView;
 
+    Button button;
+
     public ChartFragment(String numberInput) {
         this.numberInput = numberInput;
     }
@@ -63,16 +66,23 @@ public class ChartFragment extends Fragment {
         BluetoothSocket bluetoothSocket = MainActivity.bluetoothSocket;
         sb = new StringBuilder();
         sendBool = true;
-
+        button = myView.findViewById(R.id.buttonChart);
+        System.out.println("-created FRAGMENT-");
         myThreadConnectedCharts = new ThreadConnectedCharts(bluetoothSocket);
         myThreadConnectedCharts.start(); // запуск потока приёма и отправки данных
         System.out.println("myThreadConnected created");
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                sendBiteToArduino();
+            }
+        });
         return myView;
     }
 
     @Override
     public void onDestroy() {
-        System.out.println("------------DESTROY INFO FRAGMENT------------");
+        System.out.println("-DESTROY FRAGMENT-");
         sb.delete(0, sb.length());
         super.onDestroy();
     }
@@ -80,15 +90,8 @@ public class ChartFragment extends Fragment {
     @Override
     public void onStop() {
         super.onStop();  // Always call the superclass method first
-        System.out.println("_________________________________PAUSE_______________________________");
+        System.out.println("_STOP FRAGMENT_");
         sb.delete(0, sb.length());
-    }
-
-    @Override
-    public void onStart() {
-        System.out.println("------------START INFO FRAGMENT------------");
-        sendBiteToArduino();
-        super.onStart();
     }
 
     public class ThreadConnectedCharts extends Thread {
@@ -130,12 +133,7 @@ public class ChartFragment extends Fragment {
                                 gettingLine(sbprint);
                                 sendBool = false;
                                 return;
-                            } else {
-                                sendBiteToArduino();
                             }
-                        } else {
-                            br.close();
-                            return;
                         }
                     } catch (IOException e) {
                         e.printStackTrace();
@@ -181,36 +179,36 @@ public class ChartFragment extends Fragment {
 //            final Double doubleTempTwo = Double.valueOf(tempTwo);
 //            @SuppressLint("DefaultLocale") final String strTempTwoF = String.format("%.2f", doubleTempTwo * 1.8 + 32);
 
-                    LineChart chart = myView.findViewById(R.id.chart);
+            LineChart chart = myView.findViewById(R.id.chart);
 
-                    chart.setDragEnabled(true);
-                    chart.setScaleEnabled(false);
-                    chart.getAxisRight().setEnabled(false);
+            chart.setDragEnabled(true);
+            chart.setScaleEnabled(false);
+            chart.getAxisRight().setEnabled(false);
 
-                    ArrayList<Entry> yVal = new ArrayList<>();
+            ArrayList<Entry> yVal = new ArrayList<>();
 
-                    for (int i = 0; i < 12; i++) {
-                        yVal.add(new Entry(i + 1, Float.valueOf(readings[i])));
-                    }
-                    LineDataSet setOne = new LineDataSet(yVal, "Data Set: " + numberInput);
+            for (int i = 0; i < 12; i++) {
+                yVal.add(new Entry(i + 1, Float.valueOf(readings[i])));
+            }
+            LineDataSet setOne = new LineDataSet(yVal, "Data Set: " + numberInput);
 
-                    setOne.setFillAlpha(110);
-                    setOne.setColor(Color.argb(255, 31, 99, 182));
-                    setOne.setLineWidth(2f);
-                    setOne.setValueTextSize(11f);
-                    setOne.setValueTextColor(Color.RED);
+            setOne.setFillAlpha(110);
+            setOne.setColor(Color.argb(255, 31, 99, 182));
+            setOne.setLineWidth(2f);
+            setOne.setValueTextSize(11f);
+            setOne.setValueTextColor(Color.RED);
 
-                    ArrayList<ILineDataSet> dataSets = new ArrayList<>();
-                    dataSets.add(setOne);
+            ArrayList<ILineDataSet> dataSets = new ArrayList<>();
+            dataSets.add(setOne);
 
-                    LineData lineData = new LineData(dataSets);
+            LineData lineData = new LineData(dataSets);
 
-                    chart.setData(lineData);
+            chart.setData(lineData);
 
-                    XAxis xAxis = chart.getXAxis();
-                    xAxis.setGranularity(1f);
-                    xAxis.setPosition(XAxis.XAxisPosition.BOTH_SIDED);
-              
+            XAxis xAxis = chart.getXAxis();
+            xAxis.setGranularity(1f);
+            xAxis.setPosition(XAxis.XAxisPosition.BOTH_SIDED);
+
         }
 
 

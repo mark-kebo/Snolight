@@ -1,5 +1,6 @@
 package com.vorozhbicky.dmitry.snolight;
 
+import android.bluetooth.BluetoothSocket;
 import android.support.design.widget.TabLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -28,12 +29,13 @@ public class ChartsActivity extends AppCompatActivity {
      * The {@link ViewPager} that will host the section contents.
      */
     private ViewPager mViewPager;
+    private ThreadConnected threadConnectedCharts;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_charts);
-
+        BluetoothSocket bluetoothSocket = MainActivity.bluetoothSocket;
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         // Create the adapter that will return a fragment for each of the three
@@ -48,6 +50,11 @@ public class ChartsActivity extends AppCompatActivity {
 
         mViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
         tabLayout.addOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(mViewPager));
+
+        threadConnectedCharts = new ThreadConnected(bluetoothSocket);
+        threadConnectedCharts.start(); // запуск потока приёма и отправки данных
+        System.out.println("threadConnectedData created");
+        //TODO то же что и в дате. переношу сюда работу с потоком и отдаю готовую строку в конкретный фрагмент
     }
 
 

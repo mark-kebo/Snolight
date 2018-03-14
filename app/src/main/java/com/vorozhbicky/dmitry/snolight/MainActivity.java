@@ -7,13 +7,8 @@ import android.bluetooth.BluetoothSocket;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.FrameLayout;
@@ -30,14 +25,12 @@ import static android.R.layout.simple_list_item_1;
 public class MainActivity extends AppCompatActivity {
 
     private static final int REQUEST_ENABLE_BT = 1;
-    BluetoothAdapter bluetoothAdapter;
-    ArrayList<String> pairedDeviceArrayList;
-    ListView listViewPairedDevice;
-    FrameLayout ButPanel;
-    ArrayAdapter<String> pairedDeviceAdapter;
+    private BluetoothAdapter bluetoothAdapter;
+    private ListView listViewPairedDevice;
+    private FrameLayout ButPanel;
     private UUID myUUID;
     public static BluetoothSocket bluetoothSocket = null;
-    ThreadConnectBTdevice myThreadConnectBTdevice;
+    private ThreadConnectBTdevice myThreadConnectBTdevice;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,12 +70,12 @@ public class MainActivity extends AppCompatActivity {
         Set<BluetoothDevice> pairedDevices = bluetoothAdapter.getBondedDevices();
 
         if (pairedDevices.size() > 0) { // Если есть сопряжённые устройства
-            pairedDeviceArrayList = new ArrayList<>();
+            ArrayList<String> pairedDeviceArrayList = new ArrayList<>();
             for (BluetoothDevice device : pairedDevices) { // Добавляем сопряжённые устройства - Имя + MAC-адресс
                 pairedDeviceArrayList.add(device.getName() + "\n" + device.getAddress());
             }
 
-            pairedDeviceAdapter = new ArrayAdapter<>(this, simple_list_item_1, pairedDeviceArrayList);
+            ArrayAdapter<String> pairedDeviceAdapter = new ArrayAdapter<>(this, simple_list_item_1, pairedDeviceArrayList);
             listViewPairedDevice.setAdapter(pairedDeviceAdapter);
 
             listViewPairedDevice.setOnItemClickListener(new AdapterView.OnItemClickListener() { // Клик по нужному устройству
