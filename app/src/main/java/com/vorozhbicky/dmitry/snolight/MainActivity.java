@@ -29,8 +29,9 @@ public class MainActivity extends AppCompatActivity {
     private ListView listViewPairedDevice;
     private FrameLayout ButPanel;
     private UUID myUUID;
-    public static BluetoothSocket bluetoothSocket = null;
+    private BluetoothSocket bluetoothSocket = null;
     private ThreadConnectBTdevice myThreadConnectBTdevice;
+    public static ThreadConnected threadConnectedData;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -156,6 +157,8 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void run() {
                         ButPanel.setVisibility(View.VISIBLE); // открываем панель с кнопками
+                        threadConnectedData = new ThreadConnected(bluetoothSocket);
+                        threadConnectedData.start(); // запуск потока приёма и отправки данных
                     }
                 });
                 Intent intent = new Intent(getBaseContext(), DataReader.class);// запуск потока приёма и отправки данных

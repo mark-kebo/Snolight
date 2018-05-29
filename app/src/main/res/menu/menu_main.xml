@@ -4,23 +4,46 @@
     tools:context="com.vorozhbicky.dmitry.snolight.MainActivity">
     <item
         android:id="@+id/update"
-        android:icon="@drawable/update"
+        android:icon="@drawable/ic_update"
         android:orderInCategory="1"
         android:title="@string/update"
-        app:showAsAction="always" />
-    <item
-        android:id="@+id/action_graph_ch"
-        android:orderInCategory="2"
-        android:title="@string/graphCh"
-        app:showAsAction="never" />
+        app:showAsAction="always"
+        />
     <item
         android:id="@+id/action_settings"
-        android:orderInCategory="3"
+        android:icon="@drawable/ic_settings"
+        android:orderInCategory="2"
         android:title="@string/action_settings"
-        app:showAsAction="never" />
+        app:showAsAction="always" />
     <item
         android:id="@+id/action_about_us"
-        android:orderInCategory="4"
+        android:icon="@drawable/ic_about_us"
+        android:orderInCategory="3"
         android:title="@string/aboutUs"
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/action_graph_temp_one"
+        android:orderInCategory="4"
+        android:title="@string/graphTempOne"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/action_graph_temp_two"
+        android:orderInCategory="5"
+        android:title="@string/graphTempTwo"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/action_graph_temp_three"
+        android:orderInCategory="6"
+        android:title="@string/graphTempThree"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/action_graph_press"
+        android:orderInCategory="7"
+        android:title="@string/graphPress"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/action_graph_wet"
+        android:orderInCategory="8"
+        android:title="@string/graphWet"
         app:showAsAction="never" />
 </menu>

@@ -2,10 +2,8 @@ package com.vorozhbicky.dmitry.snolight;
 
 import android.bluetooth.BluetoothSocket;
 
-import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.io.OutputStream;
 
 /**
@@ -17,13 +15,21 @@ public class ThreadConnected extends Thread {
     private final OutputStream connectedOutStream;
     private String sbprint;
     private StringBuilder sb;
-    private boolean manager = false;
-    private boolean work = true;
+    private boolean work;
+    private String finalString;
+
+    public void setbNumb(char bNumb) {
+        this.bNumb = bNumb;
+    }
+
+    private char bNumb = '1';
 
     ThreadConnected(BluetoothSocket socket) {
+        finalString = null;
         InputStream in = null;
         OutputStream ot = null;
         sb = new StringBuilder();
+        work = true;
         try {
             in = socket.getInputStream();
             ot = socket.getOutputStream();
@@ -37,44 +43,41 @@ public class ThreadConnected extends Thread {
     @Override
     public void run() { // Приём данных
         //Пытаемся получить данные
-        BufferedReader br;
-        String read;
         while (work) {
             try {
-                br = new BufferedReader(new InputStreamReader(connectedInputStream));
-                if (manager && ((read = br.readLine()) != null)) {
-                    sb.append(read);
-                    sbprint = sb.toString();
+                byte[] buffer = new byte[1];
+                int bytes = connectedInputStream.read(buffer);
+                String strIncom = new String(buffer, 0, bytes);
+                sb.append(strIncom); // собираем символы в строку
+                int endOfLineIndex = sb.indexOf("\r\n"); // определяем конец строки
+                if (endOfLineIndex > 0) {
+                    sbprint = sb.substring(0, endOfLineIndex);
                     sb.delete(0, sb.length());
-                    System.out.println(sbprint);
-                    manager = false;
+                    System.out.println("THREAD---->" + sbprint);
+                    finalString = sbprint;
                 }
             } catch (IOException e) {
                 e.printStackTrace();
+                System.exit(0);
             }
         }
     }
 
-    private void write(byte[] buffer) {
+    public void sendBiteToArduino() {
+        byte bytesToSend = (byte) bNumb;
         try {
-            connectedOutStream.write(buffer);
+            connectedOutStream.write(bytesToSend);
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    void sendBiteToArduino(String s) {
-        manager = true;
-        byte[] bytesToSend = s.getBytes();
-        write(bytesToSend);
+    public String getFinalStringet() {
+        String stringOfArduino = null;
+        while (stringOfArduino == null) {
+            stringOfArduino = finalString;
+        }
+        finalString = null;
+        return stringOfArduino;
     }
-
-    String getSbprint() {
-        return sbprint;
-    }
-
-    void stopThread() {
-        work = false;
-    }
-
 }
