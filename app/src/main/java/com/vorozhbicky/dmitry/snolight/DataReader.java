@@ -1,6 +1,5 @@
 package com.vorozhbicky.dmitry.snolight;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -59,7 +58,9 @@ public class DataReader extends AppCompatActivity {
             case R.id.update:
                 MainActivity.threadConnectedData.setbNumb('1');
                 MainActivity.threadConnectedData.sendBiteToArduino();
-                gettingLine(MainActivity.threadConnectedData.getFinalStringet());
+                String s = MainActivity.threadConnectedData.getFinalStringet();
+//                gettingLine("H45.00T24.00Q24.50W25.00A14083P101891");
+                gettingLine(s);
                 break;
             case R.id.action_settings:
                 intent = new Intent(getBaseContext(), SettingsActivity.class);// запуск потока приёма и отправки данных
@@ -111,39 +112,26 @@ public class DataReader extends AppCompatActivity {
         String press = sbprint.substring(p + 1, sbprint.length());
         String wet = sbprint.substring(h + 1, t);
         String sm = sbprint.substring(a + 1, p);
-        final Integer doublePress = Integer.valueOf(press);
-        @SuppressLint("DefaultLocale") final String strPressMm = String.format("%.2f", doublePress / 133.322);
-        final Double doubleTempDev = Double.valueOf(tempDev);
-        @SuppressLint("DefaultLocale") final String strTempDevF = String.format("%.2f", doubleTempDev * 1.8 + 32);
-        final Double doubleTempOne = Double.valueOf(tempOne);
-        @SuppressLint("DefaultLocale") final String strTempOneF = String.format("%.2f", doubleTempOne * 1.8 + 32);
-        final Double doubleTempTwo = Double.valueOf(tempTwo);
-        @SuppressLint("DefaultLocale") final String strTempTwoF = String.format("%.2f", doubleTempTwo * 1.8 + 32);
-        if (swTemp == 1) {
-            textChangeTemperaturesIn.setText(strTempDevF);
-            textChangeTemperaturesOne.setText(strTempOneF);
-            textChangeTemperaturesTwo.setText(strTempTwoF);
-            textUnitsTemperaturesIn.setText(R.string.temp_f);
-            textUnitsTemperaturesOne.setText(R.string.temp_f);
-            textUnitsTemperaturesTwo.setText(R.string.temp_f);
-        } else {
-            textChangeTemperaturesIn.setText(tempDev);
-            textChangeTemperaturesOne.setText(tempOne);
-            textChangeTemperaturesTwo.setText(tempTwo);
-            textUnitsTemperaturesIn.setText(R.string.temp_c);
-            textUnitsTemperaturesOne.setText(R.string.temp_c);
-            textUnitsTemperaturesTwo.setText(R.string.temp_c);
-        }
-        if (swPress == 1) {
-            textChangePressure.setText(strPressMm);
-            textUnitsPressure.setText(R.string.StringMmRtSt);
-        } else {
-            textChangePressure.setText(press);
-            textUnitsPressure.setText(R.string.Pascal);
-        }
+//        final Integer doublePress = Integer.valueOf(press);
+//        @SuppressLint("DefaultLocale") final String strPressMm = String.format("%.2f", doublePress / 133.322);
+//        final Double doubleTempDev = Double.valueOf(tempDev);
+//        @SuppressLint("DefaultLocale") final String strTempDevF = String.format("%.2f", doubleTempDev * 1.8 + 32);
+//        final Double doubleTempOne = Double.valueOf(tempOne);
+//        @SuppressLint("DefaultLocale") final String strTempOneF = String.format("%.2f", doubleTempOne * 1.8 + 32);
+//        final Double doubleTempTwo = Double.valueOf(tempTwo);
+//        @SuppressLint("DefaultLocale") final String strTempTwoF = String.format("%.2f", doubleTempTwo * 1.8 + 32);
+
+        textChangeTemperaturesIn.setText(tempDev);
+        textChangeTemperaturesOne.setText(tempOne);
+        textChangeTemperaturesTwo.setText(tempTwo);
+        textUnitsTemperaturesIn.setText(R.string.temp_c);
+        textUnitsTemperaturesOne.setText(R.string.temp_c);
+        textUnitsTemperaturesTwo.setText(R.string.temp_c);
+        textChangePressure.setText(press);
+        textUnitsPressure.setText(R.string.Pascal);
         textChangeWet.setText(wet);
         textChangeHeight.setText(sm);
-    }
+}
 
     @Override
     protected void onResume() {

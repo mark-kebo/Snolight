@@ -16,7 +16,6 @@ public class ThreadConnected extends Thread {
     private String sbprint;
     private StringBuilder sb;
     private boolean work;
-    private String finalString;
 
     public void setbNumb(char bNumb) {
         this.bNumb = bNumb;
@@ -25,7 +24,6 @@ public class ThreadConnected extends Thread {
     private char bNumb = '1';
 
     ThreadConnected(BluetoothSocket socket) {
-        finalString = null;
         InputStream in = null;
         OutputStream ot = null;
         sb = new StringBuilder();
@@ -54,7 +52,6 @@ public class ThreadConnected extends Thread {
                     sbprint = sb.substring(0, endOfLineIndex);
                     sb.delete(0, sb.length());
                     System.out.println("THREAD---->" + sbprint);
-                    finalString = sbprint;
                 }
             } catch (IOException e) {
                 e.printStackTrace();
@@ -73,11 +70,12 @@ public class ThreadConnected extends Thread {
     }
 
     public String getFinalStringet() {
-        String stringOfArduino = null;
-        while (stringOfArduino == null) {
-            stringOfArduino = finalString;
-        }
-        finalString = null;
+        String stringOfArduino;
+        do {
+            stringOfArduino = sbprint;
+            System.out.println(stringOfArduino);
+        } while (stringOfArduino == null);
+        sbprint = null;
         return stringOfArduino;
     }
 }
