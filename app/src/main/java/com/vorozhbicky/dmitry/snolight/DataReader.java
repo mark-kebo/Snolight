@@ -1,7 +1,10 @@
 package com.vorozhbicky.dmitry.snolight;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -10,6 +13,7 @@ import android.widget.TextView;
 
 public class DataReader extends AppCompatActivity {
 
+    SharedPreferences mSharedPreferences;
 
     private TextView textChangeWet;
     private TextView textChangePressure;
@@ -21,7 +25,7 @@ public class DataReader extends AppCompatActivity {
     private TextView textUnitsTemperaturesIn;
     private TextView textUnitsTemperaturesTwo;
     private TextView textUnitsPressure;
-    private int swTemp = 0, swPress = 0;
+    private String swTemp = "0", swPress = "0";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,6 +34,7 @@ public class DataReader extends AppCompatActivity {
         setContentView(R.layout.activity_data_reader);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         TextView textStereoTemperaturesIn = findViewById(R.id.textStereoTemperaturesIn);
         TextView textViewForPredictionWeather = findViewById(R.id.textViewForPredictionWeather);
         textChangeWet = findViewById(R.id.textChangeWet);
@@ -59,7 +64,6 @@ public class DataReader extends AppCompatActivity {
                 MainActivity.threadConnectedData.setbNumb('1');
                 MainActivity.threadConnectedData.sendBiteToArduino();
                 String s = MainActivity.threadConnectedData.getFinalStringet();
-//                gettingLine("H45.00T24.00Q24.50W25.00A14083P101891");
                 gettingLine(s);
                 break;
             case R.id.action_settings:
@@ -112,29 +116,46 @@ public class DataReader extends AppCompatActivity {
         String press = sbprint.substring(p + 1, sbprint.length());
         String wet = sbprint.substring(h + 1, t);
         String sm = sbprint.substring(a + 1, p);
-//        final Integer doublePress = Integer.valueOf(press);
-//        @SuppressLint("DefaultLocale") final String strPressMm = String.format("%.2f", doublePress / 133.322);
-//        final Double doubleTempDev = Double.valueOf(tempDev);
-//        @SuppressLint("DefaultLocale") final String strTempDevF = String.format("%.2f", doubleTempDev * 1.8 + 32);
-//        final Double doubleTempOne = Double.valueOf(tempOne);
-//        @SuppressLint("DefaultLocale") final String strTempOneF = String.format("%.2f", doubleTempOne * 1.8 + 32);
-//        final Double doubleTempTwo = Double.valueOf(tempTwo);
-//        @SuppressLint("DefaultLocale") final String strTempTwoF = String.format("%.2f", doubleTempTwo * 1.8 + 32);
 
-        textChangeTemperaturesIn.setText(tempDev);
-        textChangeTemperaturesOne.setText(tempOne);
-        textChangeTemperaturesTwo.setText(tempTwo);
-        textUnitsTemperaturesIn.setText(R.string.temp_c);
-        textUnitsTemperaturesOne.setText(R.string.temp_c);
-        textUnitsTemperaturesTwo.setText(R.string.temp_c);
-        textChangePressure.setText(press);
-        textUnitsPressure.setText(R.string.Pascal);
+        final Integer doublePress = Integer.valueOf(press);
+        @SuppressLint("DefaultLocale") final String strPressMm = String.format("%.2f", doublePress / 133.322);
+        final Double doubleTempDev = Double.valueOf(tempDev);
+        @SuppressLint("DefaultLocale") final String strTempDevF = String.format("%.2f", doubleTempDev * 1.8 + 32);
+        final Double doubleTempOne = Double.valueOf(tempOne);
+        @SuppressLint("DefaultLocale") final String strTempOneF = String.format("%.2f", doubleTempOne * 1.8 + 32);
+        final Double doubleTempTwo = Double.valueOf(tempTwo);
+        @SuppressLint("DefaultLocale") final String strTempTwoF = String.format("%.2f", doubleTempTwo * 1.8 + 32);
+        if (swTemp.equals("1")) {
+            textChangeTemperaturesIn.setText(strTempDevF);
+            textChangeTemperaturesOne.setText(strTempOneF);
+            textChangeTemperaturesTwo.setText(strTempTwoF);
+            textUnitsTemperaturesIn.setText(R.string.temp_f);
+            textUnitsTemperaturesOne.setText(R.string.temp_f);
+            textUnitsTemperaturesTwo.setText(R.string.temp_f);
+        } else {
+            textChangeTemperaturesIn.setText(tempDev);
+            textChangeTemperaturesOne.setText(tempOne);
+            textChangeTemperaturesTwo.setText(tempTwo);
+            textUnitsTemperaturesIn.setText(R.string.temp_c);
+            textUnitsTemperaturesOne.setText(R.string.temp_c);
+            textUnitsTemperaturesTwo.setText(R.string.temp_c);
+        }
+        if (swPress.equals("1")) {
+            textChangePressure.setText(strPressMm);
+            textUnitsPressure.setText(R.string.StringMmRtSt);
+        } else {
+            textChangePressure.setText(press);
+            textUnitsPressure.setText(R.string.Pascal);
+        }
         textChangeWet.setText(wet);
         textChangeHeight.setText(sm);
-}
+    }
 
     @Override
     protected void onResume() {
+        swPress = mSharedPreferences.getString("press_list", "null");
+        swTemp = mSharedPreferences.getString("far_list", "null");
+
         String s = null;
         while (s == null) {
             MainActivity.threadConnectedData.setbNumb('1');
@@ -143,7 +164,6 @@ public class DataReader extends AppCompatActivity {
             System.out.println("DATA IN---------->" + s);
         }
         gettingLine(s);
-        System.out.println("onResume()");
         super.onResume();
     }
 }

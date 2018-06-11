@@ -43,7 +43,7 @@ public class MainActivity extends AppCompatActivity {
         ButPanel = findViewById(R.id.ButPanel);
 
         if (!getPackageManager().hasSystemFeature(PackageManager.FEATURE_BLUETOOTH)) {
-            Toast.makeText(this, "BLUETOOTH NOT support", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "Bluetooth не поддерживается", Toast.LENGTH_LONG).show();
             finish();
             return;
         }
@@ -52,7 +52,7 @@ public class MainActivity extends AppCompatActivity {
         bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
 
         if (bluetoothAdapter == null) {
-            Toast.makeText(this, "Bluetooth is not supported on this hardware platform", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "Bluetooth не поддерживается на данном устройстве", Toast.LENGTH_LONG).show();
             finish();
         }
     } // END onCreate
@@ -111,7 +111,7 @@ public class MainActivity extends AppCompatActivity {
             if (resultCode == Activity.RESULT_OK) {
                 setup();
             } else { // Если не разрешили, тогда закрываем приложение
-                Toast.makeText(this, "BlueTooth не включён", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Bluetooth не включён", Toast.LENGTH_SHORT).show();
                 finish();
             }
         }
@@ -167,7 +167,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         private void cancel() {
-            Toast.makeText(getApplicationContext(), "Close - BluetoothSocket", Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(), "Bluetooth-устройство отключено", Toast.LENGTH_LONG).show();
             try {
                 bluetoothSocket.close();
             } catch (IOException e) {
