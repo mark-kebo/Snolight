@@ -19,6 +19,7 @@ import java.util.ArrayList;
 public class ChartActivity extends AppCompatActivity {
 
     private char number;
+    private String nameChart;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,7 +31,26 @@ public class ChartActivity extends AppCompatActivity {
         actionBar.setDisplayHomeAsUpEnabled(true);
         Intent intent = getIntent();
         number = intent.getCharExtra("number", '1');
-        System.out.println("------------------------------->" + number);
+        switch (number) {
+            case '2':
+                nameChart = "Изменение давления";
+                break;
+            case '3':
+                nameChart = "Изменение темп-ры №2";
+                break;
+            case '4':
+                nameChart = "Изменение темп-ры №1";
+                break;
+            case '5':
+                nameChart = "Изменение темп-ры в помещении";
+                break;
+            case '6':
+                nameChart = "Изменение влажности";
+                break;
+            default:
+                nameChart = "График изменения";
+        }
+        super.setTitle(nameChart);
     }
 
     @Override
@@ -43,7 +63,6 @@ public class ChartActivity extends AppCompatActivity {
             System.out.println("CHART---------->" + s);
         }
         gettingLine(s);
-        System.out.println("onResume()");
         super.onResume();
     }
 
@@ -103,7 +122,7 @@ public class ChartActivity extends AppCompatActivity {
         }
         valsForChart.clear();
 
-        LineDataSet setOne = new LineDataSet(yVal, "Data Set: " + string);
+        LineDataSet setOne = new LineDataSet(yVal, "Единицы измерения: " + string);
 
         setOne.setFillAlpha(110);
         setOne.setColor(Color.argb(255, 31, 99, 182));
@@ -115,7 +134,6 @@ public class ChartActivity extends AppCompatActivity {
         dataSets.add(setOne);
 
         LineData lineData = new LineData(dataSets);
-
         chart.setData(lineData);
 
         XAxis xAxis = chart.getXAxis();
