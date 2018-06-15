@@ -192,12 +192,6 @@
                 android:textColor="@android:color/holo_green_dark"
                 android:textSize="18sp" />
 
-            <ImageView
-                android:id="@+id/imageStatePressure"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="0"
-                app:srcCompat="@drawable/ico_ok" />
         </LinearLayout>
 
         <LinearLayout

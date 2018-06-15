@@ -13,7 +13,7 @@ import android.widget.TextView;
 
 public class DataReader extends AppCompatActivity {
 
-    SharedPreferences mSharedPreferences;
+    private SharedPreferences mSharedPreferences;
 
     private TextView textChangeWet;
     private TextView textChangePressure;
