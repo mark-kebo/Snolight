@@ -12,6 +12,7 @@ import android.view.MenuItem;
 
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.XAxis;
+import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
@@ -24,8 +25,8 @@ public class ChartActivity extends AppCompatActivity {
     private SharedPreferences mSharedPreferences;
 
     private char number;
-    private String nameChart;
     private String swTemp = "0", swPress = "0";
+    private String nameChartLine;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,24 +39,30 @@ public class ChartActivity extends AppCompatActivity {
         Intent intent = getIntent();
         mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         number = intent.getCharExtra("number", '1');
+        String nameChart;
         switch (number) {
             case '2':
-                nameChart = "Изменение давления";
+                nameChart = getString(R.string.chart_change_pressure);
+                nameChartLine = getString(R.string.chart_pressure_to);
                 break;
             case '3':
-                nameChart = "Изменение темп-ры №2";
+                nameChart = getString(R.string.chart_change_temp_two);
+                nameChartLine = getString(R.string.chart_temp_two_to);
                 break;
             case '4':
-                nameChart = "Изменение темп-ры №1";
+                nameChart = getString(R.string.chart_change_temp_one);
+                nameChartLine = getString(R.string.chart_temp_one_to);
                 break;
             case '5':
-                nameChart = "Изменение темп-ры в помещении";
+                nameChart = getString(R.string.chart_change_temp_in);
+                nameChartLine = getString(R.string.chart_temp_in_to);
                 break;
             case '6':
-                nameChart = "Изменение влажности";
+                nameChart = getString(R.string.chart_change_wet);
+                nameChartLine = getString(R.string.chart_wet_to);
                 break;
             default:
-                nameChart = "График изменения";
+                nameChart = getString(R.string.app_name);
         }
         super.setTitle(nameChart);
     }
@@ -88,7 +95,7 @@ public class ChartActivity extends AppCompatActivity {
     @SuppressLint("DefaultLocale")
     private void gettingLine(String string) {
         int pa, pb, pc, pd, pe, pf, pg, ph;
-        String nameVal = "...";
+        String nameVal = getString(R.string.start_indication);
 
         pa = string.indexOf("A");
         pb = string.indexOf("B");
@@ -101,14 +108,31 @@ public class ChartActivity extends AppCompatActivity {
 
         ArrayList<String> valsForChart = new ArrayList<>();
         LineChart chart = findViewById(R.id.chart);
-        chart.setDragEnabled(true);
-        chart.setScaleEnabled(false);
         chart.getAxisRight().setEnabled(false);
+        // no description text
+        chart.getDescription().setEnabled(false);
+        // enable touch gestures
+        chart.setTouchEnabled(true);
+        // enable scaling and dragging
+        chart.setDragEnabled(true);
+        chart.setScaleEnabled(true);
+        // if disabled, scaling can be done on x- and y-axis separately
+        chart.setPinchZoom(false);
+        chart.setDrawGridBackground(false);
+        chart.setMaxHighlightDistance(300);
+        chart.getXAxis().setEnabled(false);
+
+        YAxis y = chart.getAxisLeft();
+        y.setLabelCount(6, false);
+        y.setTextColor(Color.GRAY);
+        y.setPosition(YAxis.YAxisLabelPosition.OUTSIDE_CHART);
+        y.setDrawGridLines(false);
+        y.setAxisLineColor(Color.GRAY);
 
         ArrayList<Entry> yVal = new ArrayList<>();
 
         if (number == '2' && swPress.equals("1")) {
-            nameVal = "мм.рт.ст.";
+            nameVal = getString(R.string.StringMmRtSt);
             String temp;
             if ((temp = addStringToChart(pa, pb, string)) != null) {
                 valsForChart.add(String.format("%.2f",
@@ -143,7 +167,7 @@ public class ChartActivity extends AppCompatActivity {
                         Integer.valueOf(temp) / 133.322));
             }
         } else if ((number == '3' || number == '4' || number == '5') && swTemp.equals("1")) {
-            nameVal = "°F";
+            nameVal = getString(R.string.temp_f);
             String temp;
             if ((temp = addStringToChart(pa, pb, string)) != null) {
                 valsForChart.add(String.format("%.2f",
@@ -179,10 +203,10 @@ public class ChartActivity extends AppCompatActivity {
             }
         } else {
             if (number == '2' && swPress.equals("0"))
-                nameVal = "Pa";
+                nameVal = getString(R.string.Pascal);
             else if ((number == '3' || number == '4' || number == '5') && swTemp.equals("0"))
-                nameVal = "°C";
-            else nameVal = "%";
+                nameVal = getString(R.string.temp_c);
+            else nameVal = getString(R.string.percentages);
             String temp;
             if ((temp = addStringToChart(pa, pb, string)) != null) {
                 valsForChart.add(temp);
@@ -211,19 +235,26 @@ public class ChartActivity extends AppCompatActivity {
         }
 
         for (int i = 0; i < valsForChart.size(); i++) {
-            yVal.add(new Entry(i + 1, Float.valueOf(valsForChart.get(i))));
+            yVal.add(new Entry(i + 1, Float.valueOf(valsForChart.get(valsForChart.size() - (i + 1)))));
         }
         valsForChart.clear();
 
-        LineDataSet setOne = new LineDataSet(yVal, "Единицы измерения: " + nameVal);
+        // dont forget to refresh the drawing
+        chart.invalidate();
+        LineDataSet setOne = new LineDataSet(yVal, nameChartLine + " " + nameVal);
 
-        setOne.setFillAlpha(110);
-        setOne.setCircleColor(Color.rgb(244, 67, 54));
+        setOne.setMode(LineDataSet.Mode.CUBIC_BEZIER);
+        setOne.setCubicIntensity(0.2f);
+        setOne.setLineWidth(1.8f);
+        setOne.setFillColor(Color.GRAY);
+        setOne.setFillAlpha(100);
+        setOne.setDrawVerticalHighlightIndicator(false);
+        setOne.setCircleColor(Color.rgb(50, 110, 215));
+        setOne.setCircleRadius(2);
         setOne.setDrawCircleHole(false);
-        setOne.setColor(Color.rgb(70, 183, 100));
-        setOne.setLineWidth(2f);
+        setOne.setColor(Color.rgb(50, 170, 215));
         setOne.setValueTextSize(11f);
-        setOne.setValueTextColor(Color.rgb(244, 67, 54));
+        setOne.setValueTextColor(Color.rgb(231, 85, 101));
 
         ArrayList<ILineDataSet> dataSets = new ArrayList<>();
         dataSets.add(setOne);

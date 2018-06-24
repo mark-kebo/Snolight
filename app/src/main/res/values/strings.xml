@@ -2,27 +2,53 @@
     <string name="app_name">Snolight - метеостанция</string>
     <string name="action_settings">Настройки</string>
     <string name="temp_c">°C</string>
+    <string name="temp_f">°F</string>
+    <string name="percentages">%</string>
+    <string name="StringMmRtSt">мм.рт.ст.</string>
+    <string name="Pascal">Pa</string>
+    <string name="StringSmConst">см</string>
     <string name="main_str_wet">Влажность:</string>
     <string name="pressure">Давление:</string>
-    <string name="string_sost_one_pressure">Наблюдается резкое падение давления, возможно ухудшение погоды</string>
-    <string name="string_sost_two">Условия для жизни нормальные</string>
-    <string name="temp_c_f">°C / °F</string>
-    <string name="temp_f">°F</string>
+
+    <string name="first_state_normal">Условия для жизни нормальные</string>
+    <string name="second_state_normal">Рекомендуется поддерживать температуру в помещении в промежутке 18…24°С,
+        а влажность в промежутке 40…60%</string>
+
+    <string name="first_state_temp_above_norm">Температура в помещении выше нормы</string>
+    <string name="first_state_temp_below_norm">Температура в помещении ниже нормы</string>
+    <string name="first_state_wet_above_norm">Влажность в помещении выше нормы</string>
+    <string name="first_state_wet_below_norm">Влажность в помещении ниже нормы</string>
+    <string name="first_state_wet_and_temp_above_norm">Влажность и температура в помещении выше нормы</string>
+    <string name="first_state_wet_and_temp_below_norm">Влажность и температура в помещении ниже нормы</string>
+    <string name="first_state_wet_below_and_temp_above_norm">Влажность в помещении ниже, а температура выше нормы</string>
+    <string name="first_state_wet_above_and_temp_below_norm">Влажность в помещении выше, а температура ниже нормы</string>
+
+    <string name="second_state_temp_above_norm">Рекомендуется включить кондиционер в режиме охлаждения
+        или открыть окно для понижения температуры в помещении</string>
+    <string name="second_state_temp_below_norm">Рекомендуется включить нагревательное устройство для
+    повышения температуры в помещении</string>
+    <string name="second_state_wet_above_norm">Рекомендуется включить кондиционер в режиме осушения помещения
+        или открыть окно</string>
+    <string name="second_state_wet_below_norm">Рекомендуется включить устройство для увлажнения помещения</string>
+    <string name="second_state_wet_and_temp_above_norm">Рекомендуется включить кондиционер в режиме осушения или охлаждения,
+        так же можно открыть окно для охлаждения и осушения помещения</string>
+    <string name="second_state_wet_and_temp_below_norm">Рекомендуется включить нагревательное устройство для обогрева
+        и устройство для увлажнения помещения</string>
+    <string name="second_state_wet_below_and_temp_above_norm">Рекомендуется включить устройство для увлажнения помещения
+        и кондиционер в режиме охлаждения</string>
+    <string name="second_state_wet_above_and_temp_below_norm">Рекомендуется включить кондиционер в режиме осушения помещения
+        и включить нагревательное устройство</string>
+
+    <string name="title_activity_data_reader"></string>
+    <string name="todo">TODO</string>
+    <string name="start_indication">…</string>
     <string name="temp_string_station">Темп-ра в помещении:</string>
     <string name="temp_station_1">Темп-ра на 1-м датчике:</string>
     <string name="temp_station_2">Темп-ра на 2-м датчике:</string>
-    <string name="start_indication">…</string>
-    <string name="todo">TODO</string>
     <string name="title_bluetooth_activity">Показания датчиков Bluetooth-метеостанции</string>
     <string name="string_devices">Выберете Ваше устройство из списка ниже:</string>
-    <string name="percentages">%</string>
-    <string name="Pascal">Pa</string>
     <string name="height_above_sea_level">Высота над уровнем моря:</string>
     <string name="stringToLoad">Устройства доступные для подключения:</string>
-    <string name="StringSmConst">см</string>
-    <string name="StringMmRtSt">мм.рт.ст.</string>
-    <string name="switchMmRtStToPascal">Pa / мм.рт.ст.</string>
-    <string name="title_activity_data_reader"></string>
     <string name="graphTempOne">График измен. темп. в помещении</string>
     <string name="graphTempTwo">График измен. темп. №2</string>
     <string name="graphTempThree">График измен. темп. №1</string>
@@ -30,8 +56,18 @@
     <string name="graphWet">График измен. влажности</string>
     <string name="aboutUs">О приложении</string>
     <string name="update">Обновление</string>
-    <string name="title_activity_charts">Charts</string>
-    <string name="section_format">Hello World from section: %1$d</string>
+    <string name="chart_change_pressure">Изменение давления</string>
+    <string name="chart_change_temp_two">Изменение темп-ры №2</string>
+    <string name="chart_change_temp_one">Изменение темп-ры №1</string>
+    <string name="chart_change_temp_in">Изменение темп-ры в помещении</string>
+    <string name="chart_change_wet">Изменение влажности</string>
+    <string name="chart_pressure_to">График давления в</string>
+    <string name="chart_temp_two_to">График температуры со 2 датчика в</string>
+    <string name="chart_temp_one_to">График температуры со 1 датчика в</string>
+    <string name="chart_temp_in_to">График температуры с внутреннего датчика в</string>
+    <string name="chart_wet_to">График влажности в</string>
+
+
     <string name="currentValues">Текущие значения</string>
     <string name="tab_text_1">Темп.1</string>
     <string name="tab_text_2">Темп.2</string>

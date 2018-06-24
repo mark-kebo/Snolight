@@ -73,7 +73,11 @@ public class ThreadConnected extends Thread {
         String stringOfArduino;
         do {
             stringOfArduino = sbprint;
-            System.out.println(stringOfArduino);
+            try {
+                Thread.sleep(100);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         } while (stringOfArduino == null);
         sbprint = null;
         return stringOfArduino;
