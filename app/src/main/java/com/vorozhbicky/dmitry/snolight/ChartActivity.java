@@ -8,7 +8,10 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
 import android.view.MenuItem;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.XAxis;
@@ -18,15 +21,20 @@ import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 
+import static android.R.layout.simple_list_item_1;
+
 import java.util.ArrayList;
 
 public class ChartActivity extends AppCompatActivity {
 
     private SharedPreferences mSharedPreferences;
+    private ListView readingsListView;
 
     private char number;
     private String swTemp = "0", swPress = "0";
     private String nameChartLine;
+
+    ArrayList<String> readingsList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,6 +73,11 @@ public class ChartActivity extends AppCompatActivity {
                 nameChart = getString(R.string.app_name);
         }
         super.setTitle(nameChart);
+        initRecyclerView();
+    }
+
+    private void initRecyclerView() {
+        readingsListView = findViewById(R.id.readings_list_view);
     }
 
     @Override
@@ -234,6 +247,8 @@ public class ChartActivity extends AppCompatActivity {
 
         for (int i = 0; i < valsForChart.size(); i++) {
             yVal.add(new Entry(i + 1, Float.valueOf(valsForChart.get(valsForChart.size() - (i + 1)))));
+            readingsList.add((i + 1) + "ч. назад : " +
+                    Float.valueOf(valsForChart.get(valsForChart.size() - (i + 1))) + nameVal);
         }
         valsForChart.clear();
 
@@ -263,6 +278,8 @@ public class ChartActivity extends AppCompatActivity {
         XAxis xAxis = chart.getXAxis();
         xAxis.setGranularity(1f);
         xAxis.setPosition(XAxis.XAxisPosition.BOTH_SIDED);
+        ArrayAdapter<String> readingsListAdapter = new ArrayAdapter<>(this, simple_list_item_1, readingsList);
+        readingsListView.setAdapter(readingsListAdapter);
     }
 
     private String addStringToChart(int startSt, int endSt, String string) {
