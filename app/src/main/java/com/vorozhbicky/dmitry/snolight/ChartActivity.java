@@ -71,13 +71,11 @@ public class ChartActivity extends AppCompatActivity {
     protected void onResume() {
         swPress = mSharedPreferences.getString("press_list", "null");
         swTemp = mSharedPreferences.getString("far_list", "null");
-        String s = null;
-        while (s == null) {
-            MainActivity.threadConnectedData.setbNumb(number);
-            MainActivity.threadConnectedData.sendBiteToArduino();
-            s = MainActivity.threadConnectedData.getFinalStringet();
+        String gettingString = null;
+        while (gettingString == null) {
+            gettingString = "A11B2C32D43E11F12G45H22";
         }
-        gettingLine(s);
+        gettingLine(gettingString);
         super.onResume();
     }
 

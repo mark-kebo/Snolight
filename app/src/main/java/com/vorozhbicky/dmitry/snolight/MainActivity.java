@@ -128,42 +128,8 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public void run() { // Коннект
-            boolean success = false;
-            try {
-                bluetoothSocket.connect();
-                success = true;
-            } catch (IOException e) {
-                e.printStackTrace();
-
-                runOnUiThread(new Runnable() {
-
-                    @Override
-                    public void run() {
-                        Toast.makeText(MainActivity.this, "Отсутствует соединение, проверьте Bluetooth-метеостанцию", Toast.LENGTH_LONG).show();
-                        listViewPairedDevice.setVisibility(View.VISIBLE);
-                    }
-                });
-                try {
-                    bluetoothSocket.close();
-                } catch (IOException e1) {
-                    e1.printStackTrace();
-                }
-            }
-
-            if (success) {  // Если законнектились, тогда открываем панель с кнопками и запускаем поток приёма и отправки данных
-
-                runOnUiThread(new Runnable() {
-
-                    @Override
-                    public void run() {
-                        ButPanel.setVisibility(View.VISIBLE); // открываем панель с кнопками
-                        threadConnectedData = new ThreadConnected(bluetoothSocket);
-                        threadConnectedData.start(); // запуск потока приёма и отправки данных
-                    }
-                });
                 Intent intent = new Intent(getBaseContext(), DataReader.class);// запуск потока приёма и отправки данных
                 startActivity(intent);
-            }
         }
 
         private void cancel() {

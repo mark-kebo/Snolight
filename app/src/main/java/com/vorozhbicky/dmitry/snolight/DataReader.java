@@ -74,10 +74,8 @@ public class DataReader extends AppCompatActivity {
         Intent intent;
         switch (id) {
             case R.id.update:
-                MainActivity.threadConnectedData.setbNumb('1');
-                MainActivity.threadConnectedData.sendBiteToArduino();
-                String s = MainActivity.threadConnectedData.getFinalStringet();
-                gettingLine(s);
+                String gettingString = "H13T2Q93W87A50P80";
+                gettingLine(gettingString);
                 break;
             case R.id.action_settings:
                 intent = new Intent(getBaseContext(), SettingsActivity.class);// запуск потока приёма и отправки данных
@@ -217,13 +215,11 @@ public class DataReader extends AppCompatActivity {
         swPress = mSharedPreferences.getString("press_list", "null");
         swTemp = mSharedPreferences.getString("far_list", "null");
 
-        String s = null;
-        while (s == null) {
-            MainActivity.threadConnectedData.setbNumb('1');
-            MainActivity.threadConnectedData.sendBiteToArduino();
-            s = MainActivity.threadConnectedData.getFinalStringet();
+        String gettingString = null;
+        while (gettingString == null) {
+            gettingString = "H10T20Q30W40A50P60";
         }
-        gettingLine(s);
+        gettingLine(gettingString);
         super.onResume();
     }
 }
