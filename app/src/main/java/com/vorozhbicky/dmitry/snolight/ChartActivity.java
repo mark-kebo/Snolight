@@ -80,13 +80,17 @@ public class ChartActivity extends AppCompatActivity {
 
     @Override
     protected void onResume() {
+        readingsList.clear();
         swPress = mSharedPreferences.getString("press_list", "null");
         swTemp = mSharedPreferences.getString("far_list", "null");
         String gettingString = null;
         while (gettingString == null) {
-            gettingString = "A11B2C32D43E11F12G45H22";
+            gettingString = "A99";
         }
-        gettingLine(gettingString);
+        //need select A99 at device if less an hour
+        if (gettingString != "A99") {
+            gettingLine(gettingString);
+        }
         super.onResume();
     }
 
@@ -245,7 +249,7 @@ public class ChartActivity extends AppCompatActivity {
 
         for (int i = 0; i < valsForChart.size(); i++) {
             yVal.add(new Entry(i + 1, Float.valueOf(valsForChart.get(valsForChart.size() - (i + 1)))));
-            readingsList.add((i + 1) + "ч. назад : " +
+            readingsList.add("Показание " + (i + 1) + "ч. назад: " +
                     Float.valueOf(valsForChart.get(valsForChart.size() - (i + 1))) + nameVal);
         }
         valsForChart.clear();
