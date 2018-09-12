@@ -9,10 +9,7 @@ import android.preference.PreferenceManager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.ListAdapter;
 import android.widget.ListView;
 
 import com.github.mikephil.charting.charts.LineChart;
@@ -80,15 +77,20 @@ public class ChartActivity extends AppCompatActivity {
 
     @Override
     protected void onResume() {
+        readingsList.clear();
         swPress = mSharedPreferences.getString("press_list", "null");
         swTemp = mSharedPreferences.getString("far_list", "null");
-        String s = null;
-        while (s == null) {
+        String gettingString = null;
+        while (gettingString == null) {
             MainActivity.threadConnectedData.setbNumb(number);
             MainActivity.threadConnectedData.sendBiteToArduino();
-            s = MainActivity.threadConnectedData.getFinalStringet();
+            gettingString = MainActivity.threadConnectedData.getFinalStringet();
         }
-        gettingLine(s);
+        gettingLine(gettingString);
+        //need select A99 at device if less an hour
+        if (gettingString.equals("A99")) {
+            gettingLine(gettingString);
+        }
         super.onResume();
     }
 
@@ -247,7 +249,7 @@ public class ChartActivity extends AppCompatActivity {
 
         for (int i = 0; i < valsForChart.size(); i++) {
             yVal.add(new Entry(i + 1, Float.valueOf(valsForChart.get(valsForChart.size() - (i + 1)))));
-            readingsList.add((i + 1) + "ч. назад : " +
+            readingsList.add("Показание " + (i + 1) + "ч. назад: " +
                     Float.valueOf(valsForChart.get(valsForChart.size() - (i + 1))) + nameVal);
         }
         valsForChart.clear();

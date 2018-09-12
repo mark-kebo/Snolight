@@ -217,13 +217,13 @@ public class DataReader extends AppCompatActivity {
         swPress = mSharedPreferences.getString("press_list", "null");
         swTemp = mSharedPreferences.getString("far_list", "null");
 
-        String s = null;
-        while (s == null) {
+        String gettingString = null;
+        while (gettingString == null) {
             MainActivity.threadConnectedData.setbNumb('1');
             MainActivity.threadConnectedData.sendBiteToArduino();
-            s = MainActivity.threadConnectedData.getFinalStringet();
+            gettingString = MainActivity.threadConnectedData.getFinalStringet();
         }
-        gettingLine(s);
+        gettingLine(gettingString);
         super.onResume();
     }
 }

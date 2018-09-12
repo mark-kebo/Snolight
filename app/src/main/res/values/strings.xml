@@ -67,7 +67,6 @@
     <string name="chart_temp_in_to">График температуры с внутреннего датчика в</string>
     <string name="chart_wet_to">График влажности в</string>
 
-
     <string name="currentValues">Текущие значения</string>
     <string name="tab_text_1">Темп.1</string>
     <string name="tab_text_2">Темп.2</string>
@@ -77,6 +76,12 @@
     <string name="title_activity_settings">Настройки</string>
     <string name="title_settings_temp">Единицы измерения температуры</string>
     <string name="title_settings_press">Единицы измерения давления</string>
+    <string name="bluetooth_snolight">Bluetooth-метеостанция Snolight</string>
+    <string name="developer_dvv">Разработчик: Ворожбицкий Дмитрий Викторович</string>
+    <string name="year_2018">2018 год</string>
+    <string name="teacher">Руководитель: Рамазанов Виталий Михайлович</string>
+    <string name="group_141">Группа: СВС-ИИТ-141</string>
+    <string name="logo">Logo</string>
 
     <string-array name="pref_list_press">
         <item>Паскали</item>
