@@ -25,17 +25,17 @@ public class ThreadConnected extends Thread {
 
     ThreadConnected(BluetoothSocket socket) {
         InputStream in = null;
-        OutputStream ot = null;
+        OutputStream out = null;
         sb = new StringBuilder();
         work = true;
         try {
             in = socket.getInputStream();
-            ot = socket.getOutputStream();
+            out = socket.getOutputStream();
         } catch (IOException e) {
             e.printStackTrace();
         }
         connectedInputStream = in;
-        connectedOutStream = ot;
+        connectedOutStream = out;
     }
 
     @Override
