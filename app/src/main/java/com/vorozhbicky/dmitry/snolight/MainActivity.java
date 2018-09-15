@@ -73,7 +73,7 @@ public class MainActivity extends AppCompatActivity {
         if (pairedDevices.size() > 0) { // Если есть сопряжённые устройства
             ArrayList<String> pairedDeviceArrayList = new ArrayList<>();
             for (BluetoothDevice device : pairedDevices) { // Добавляем сопряжённые устройства - Имя + MAC-адресс
-                pairedDeviceArrayList.add(device.getName() + "\n" + device.getAddress());
+                pairedDeviceArrayList.add("Метеостанция " + device.getName() + "\n" + device.getAddress());
             }
 
             ArrayAdapter<String> pairedDeviceAdapter = new ArrayAdapter<>(this, simple_list_item_1, pairedDeviceArrayList);
