@@ -1,6 +1,8 @@
 package com.vorozhbicky.dmitry.snolight;
 
+import android.app.Activity;
 import android.bluetooth.BluetoothSocket;
+import android.widget.Toast;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -55,7 +57,7 @@ public class ThreadConnected extends Thread {
                 }
             } catch (IOException e) {
                 e.printStackTrace();
-                System.exit(0);
+                sbprint = "404";
             }
         }
     }

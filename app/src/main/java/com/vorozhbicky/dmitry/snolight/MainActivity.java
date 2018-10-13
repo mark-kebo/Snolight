@@ -139,7 +139,9 @@ public class MainActivity extends AppCompatActivity {
 
                     @Override
                     public void run() {
-                        Toast.makeText(MainActivity.this, "Отсутствует соединение, проверьте Bluetooth-метеостанцию", Toast.LENGTH_LONG).show();
+                        Toast.makeText(MainActivity.this,
+                                "Отсутствует соединение, проверьте Bluetooth-метеостанцию",
+                                Toast.LENGTH_LONG).show();
                         listViewPairedDevice.setVisibility(View.VISIBLE);
                     }
                 });

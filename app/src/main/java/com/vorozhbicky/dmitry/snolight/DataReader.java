@@ -11,6 +11,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class DataReader extends AppCompatActivity {
 
@@ -76,8 +77,14 @@ public class DataReader extends AppCompatActivity {
             case R.id.update:
                 MainActivity.threadConnectedData.setbNumb('1');
                 MainActivity.threadConnectedData.sendBiteToArduino();
-                String s = MainActivity.threadConnectedData.getFinalStringet();
-                gettingLine(s);
+                String gettingString = MainActivity.threadConnectedData.getFinalStringet();
+                if (gettingString.equals("404")) {
+                    Toast.makeText(DataReader.this,
+                            "Отсутствует соединение, проверьте Bluetooth-метеостанцию",
+                            Toast.LENGTH_LONG).show();
+                } else {
+                    gettingLine(gettingString);
+                }
                 break;
             case R.id.action_settings:
                 intent = new Intent(getBaseContext(), SettingsActivity.class);// запуск потока приёма и отправки данных
@@ -223,7 +230,13 @@ public class DataReader extends AppCompatActivity {
             MainActivity.threadConnectedData.sendBiteToArduino();
             gettingString = MainActivity.threadConnectedData.getFinalStringet();
         }
-        gettingLine(gettingString);
+        if (gettingString.equals("404")) {
+            Toast.makeText(DataReader.this,
+                    "Отсутствует соединение, проверьте Bluetooth-метеостанцию",
+                    Toast.LENGTH_LONG).show();
+        } else {
+            gettingLine(gettingString);
+        }
         super.onResume();
     }
 }

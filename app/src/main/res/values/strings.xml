@@ -82,6 +82,7 @@
     <string name="teacher">Руководитель: Рамазанов Виталий Михайлович</string>
     <string name="group_141">Группа: СВС-ИИТ-141</string>
     <string name="logo">Logo</string>
+    <string name="noDataMessage">Нет данных дле отображения. Пожалуйста, подождите пока метеостанция снимет достаточно показаний</string>
 
     <string-array name="pref_list_press">
         <item>Паскали</item>

@@ -9,8 +9,10 @@ import android.preference.PreferenceManager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.XAxis;
@@ -28,17 +30,19 @@ public class ChartActivity extends AppCompatActivity {
 
     private SharedPreferences mSharedPreferences;
     private ListView readingsListView;
+    private TextView noDataMessage;
 
     private char number;
     private String swTemp = "0", swPress = "0";
     private String nameChartLine;
 
-    ArrayList<String> readingsList = new ArrayList<>();
+    private ArrayList<String> readingsList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chart);
+        noDataMessage = findViewById(R.id.noDataMessage);
         ActionBar actionBar = getSupportActionBar();
         assert actionBar != null;
         actionBar.setHomeButtonEnabled(true);
@@ -86,9 +90,8 @@ public class ChartActivity extends AppCompatActivity {
             MainActivity.threadConnectedData.sendBiteToArduino();
             gettingString = MainActivity.threadConnectedData.getFinalStringet();
         }
-        gettingLine(gettingString);
-        //need select A99 at device if less an hour
-        if (gettingString.equals("A99")) {
+        if (!gettingString.equals("404")) {
+            noDataMessage.setVisibility(View.INVISIBLE);
             gettingLine(gettingString);
         }
         super.onResume();
@@ -108,7 +111,7 @@ public class ChartActivity extends AppCompatActivity {
     @SuppressLint("DefaultLocale")
     private void gettingLine(String string) {
         int pa, pb, pc, pd, pe, pf, pg, ph;
-        String nameVal = getString(R.string.start_indication);
+        String nameVal;
 
         pa = string.indexOf("A");
         pb = string.indexOf("B");
@@ -254,6 +257,7 @@ public class ChartActivity extends AppCompatActivity {
         }
         valsForChart.clear();
 
+        chart.setVisibility(View.VISIBLE);
         // dont forget to refresh the drawing
         chart.invalidate();
         LineDataSet setOne = new LineDataSet(yVal, nameChartLine + " " + nameVal);
